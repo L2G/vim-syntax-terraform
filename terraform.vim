@@ -38,8 +38,10 @@ syn keyword terraResourceType
 
 syn match  terraResource        /resource/ nextgroup=terraResourceTypeStr skipwhite
 syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceType
-                           \ nextgroup=terraResourceBlock skipwhite
+                              \ nextgroup=terraResourceName skipwhite
 syn region terraResourceBlock   start=/{/ end=/}/ contained
+syn region terraResourceName    start=/"/ end=/"/
+                              \ nextgroup=terraResourceBlock skipwhite
 
 """ misc.
 
@@ -54,6 +56,8 @@ syn region terraValueStringInterp start=/\${/  end=/}/    contained
 highlight link terraCommentSingle     Comment
 highlight link terraCommentMulti      Comment
 highlight link terraResource          Structure
+highlight link terraResourceBlock     Delimiter
+highlight link terraResourceName      String
 highlight link terraResourceTypeStr   Identifier
 highlight link terraSection           Structure
 highlight link terraValueString       String
