@@ -13,13 +13,13 @@ endif
 
 syn case match
 
-syn keyword TfSection connection output provider variable
-syn keyword TfValueBool true false on off yes no
+syn keyword terraSection connection output provider variable
+syn keyword terraValueBool true false on off yes no
 
 """ resource
 
 " find . -name "resource_*.go" -not -name "resource_*_test.go" -not -name "resource_provider.go" | sed 's/.*\/resource_//; s/\.go$//'
-syn keyword TfResourceType
+syn keyword terraResourceType
           \ aws_autoscaling_group           aws_security_group
           \ aws_db_instance                 aws_subnet
           \ aws_db_security_group           aws_vpc
@@ -36,30 +36,30 @@ syn keyword TfResourceType
           \
           \ contained transparent
 
-syn match  TfResource        /resource/ nextgroup=TfResourceTypeStr skipwhite
-syn region TfResourceTypeStr start=/"/ end=/"/ contains=TfResourceType
-                           \ nextgroup=TfResourceBlock skipwhite
-syn region TfResourceBlock   start=/{/ end=/}/ contained
+syn match  terraResource        /resource/ nextgroup=terraResourceTypeStr skipwhite
+syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceType
+                           \ nextgroup=terraResourceBlock skipwhite
+syn region terraResourceBlock   start=/{/ end=/}/ contained
 
 """ misc.
 
-syn match  TfCommentSingle "#.*$"
-syn match  TfValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
-syn match  TfValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
+syn match  terraCommentSingle "#.*$"
+syn match  terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
+syn match  terraValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
 
-syn region TfCommentMulti      start=/\/\*/ end=/\*\//
-syn region TfValueString       start=/"/    end=/"/    contains=TfStringInterp
-syn region TfValueStringInterp start=/\${/  end=/}/    contained
+syn region terraCommentMulti      start=/\/\*/ end=/\*\//
+syn region terraValueString       start=/"/    end=/"/    contains=terraStringInterp
+syn region terraValueStringInterp start=/\${/  end=/}/    contained
 
-highlight link TfCommentSingle     Comment
-highlight link TfCommentMulti      Comment
-highlight link TfResource          Structure
-highlight link TfResourceTypeStr   Identifier
-highlight link TfSection           Structure
-highlight link TfValueString       String
-highlight link TfValueStringInterp Underlined
-highlight link TfValueBool         Boolean
-highlight link TfValueDec          Number
-highlight link TfValueHexaDec      Number
+highlight link terraCommentSingle     Comment
+highlight link terraCommentMulti      Comment
+highlight link terraResource          Structure
+highlight link terraResourceTypeStr   Identifier
+highlight link terraSection           Structure
+highlight link terraValueString       String
+highlight link terraValueStringInterp Underlined
+highlight link terraValueBool         Boolean
+highlight link terraValueDec          Number
+highlight link terraValueHexaDec      Number
 
 let b:current_syntax = "terraform"
