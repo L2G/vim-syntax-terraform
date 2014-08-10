@@ -39,13 +39,22 @@ syn keyword terraResourceTypeBI
 syn match  terraResource        /resource/ nextgroup=terraResourceTypeStr skipwhite
 syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI
                               \ nextgroup=terraResourceName skipwhite
-syn region terraResourceBlock   start=/{/ end=/}/ contained fold
 syn region terraResourceName    start=/"/ end=/"/
                               \ nextgroup=terraResourceBlock skipwhite
+syn region terraResourceBlock   start=/{/ end=/}/ fold
+                              \ contains=@terraConfigItem
+
+""" provider
+syn match  terraProvider      /provider/ nextgroup=terraProviderName skipwhite
+syn region terraProviderName  start=/"/ end=/"/ nextgroup=terraProviderBlock skipwhite
+syn region terraProviderBlock start=/{/ end=/}/ fold contains=@terraConfigItem
 
 """ misc.
 
 syn match  terraCommentSingle "#.*$"
+syn match  terraAssignment    "[a-z][a-z0-9_-]*" contained skipwhite
+                              \ nextgroup=terraAssignmentOp
+syn match  terraAssignmentOp  "=" nextgroup=@terraValue skipwhite
 syn match  terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
 syn match  terraValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
 
@@ -53,8 +62,18 @@ syn region terraCommentMulti      start=/\/\*/ end=/\*\//
 syn region terraValueString       start=/"/    end=/"/    contains=terraStringInterp
 syn region terraValueStringInterp start=/\${/  end=/}/    contained
 
+syn cluster terraConfigItem contains=terraAssignment
+syn cluster terraBlock      contains=terraProviderBlock,terraResourceBlock
+syn cluster terraValue      contains=terraValueBool,terraValueDec,
+                                    \terraValueHexaDec,terraValueString
+
 highlight link terraCommentMulti      Comment
 highlight link terraCommentSingle     Comment
+highlight link terraAssignment        Identifier
+highlight link terraAssignmentOp      Operator
+highlight link terraProvider          Structure
+highlight link terraProviderBlock     Delimiter
+highlight link terraProviderName      String
 highlight link terraResource          Structure
 highlight link terraResourceBlock     Delimiter
 highlight link terraResourceName      String
