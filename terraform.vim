@@ -53,18 +53,18 @@ syn region terraCommentMulti      start=/\/\*/ end=/\*\//
 syn region terraValueString       start=/"/    end=/"/    contains=terraStringInterp
 syn region terraValueStringInterp start=/\${/  end=/}/    contained
 
-highlight link terraCommentSingle     Comment
 highlight link terraCommentMulti      Comment
+highlight link terraCommentSingle     Comment
 highlight link terraResource          Structure
 highlight link terraResourceBlock     Delimiter
 highlight link terraResourceName      String
 highlight link terraResourceTypeBI    Tag
 highlight link terraResourceTypeStr   String
 highlight link terraSection           Structure
-highlight link terraValueString       String
-highlight link terraValueStringInterp Underlined
 highlight link terraValueBool         Boolean
 highlight link terraValueDec          Number
 highlight link terraValueHexaDec      Number
+highlight link terraValueString       String
+highlight link terraValueStringInterp Underlined
 
 let b:current_syntax = "terraform"
