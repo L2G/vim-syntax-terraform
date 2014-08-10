@@ -39,7 +39,7 @@ syn keyword terraResourceTypeBI
 syn match  terraResource        /resource/ nextgroup=terraResourceTypeStr skipwhite
 syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI
                               \ nextgroup=terraResourceName skipwhite
-syn region terraResourceBlock   start=/{/ end=/}/ contained
+syn region terraResourceBlock   start=/{/ end=/}/ contained fold
 syn region terraResourceName    start=/"/ end=/"/
                               \ nextgroup=terraResourceBlock skipwhite
 
