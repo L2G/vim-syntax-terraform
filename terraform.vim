@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: Terraform (http://terraform.io)
-" Maintainer: Larry Gilbert
-" Last update: 2014-08-09
+" Maintainer: Larry Gilbert <larry@L2G.to>
+" Last Change: 2014-08-09
 "
 " Thanks to OpenLogic for their syntax-highlighting primer
 " (http://www.openlogic.com/wazi/bid/188101/Create-Your-Own-Syntax-
@@ -19,7 +19,7 @@ syn keyword terraValueBool true false on off yes no
 """ resource
 
 " find . -name "resource_*.go" -not -name "resource_*_test.go" -not -name "resource_provider.go" | sed 's/.*\/resource_//; s/\.go$//'
-syn keyword terraResourceType
+syn keyword terraResourceTypeBI
           \ aws_autoscaling_group           aws_security_group
           \ aws_db_instance                 aws_subnet
           \ aws_db_security_group           aws_vpc
@@ -34,10 +34,10 @@ syn keyword terraResourceType
           \ aws_route_table_association     heroku_domain
           \ aws_s3_bucket                   heroku_drain
           \
-          \ contained transparent
+          \ contained
 
 syn match  terraResource        /resource/ nextgroup=terraResourceTypeStr skipwhite
-syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceType
+syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI
                               \ nextgroup=terraResourceName skipwhite
 syn region terraResourceBlock   start=/{/ end=/}/ contained
 syn region terraResourceName    start=/"/ end=/"/
@@ -58,7 +58,8 @@ highlight link terraCommentMulti      Comment
 highlight link terraResource          Structure
 highlight link terraResourceBlock     Delimiter
 highlight link terraResourceName      String
-highlight link terraResourceTypeStr   Identifier
+highlight link terraResourceTypeBI    Tag
+highlight link terraResourceTypeStr   String
 highlight link terraSection           Structure
 highlight link terraValueString       String
 highlight link terraValueStringInterp Underlined
