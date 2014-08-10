@@ -52,15 +52,15 @@ syn region terraProviderBlock start=/{/ end=/}/ fold contains=@terraConfigItem
 """ misc.
 
 syn match  terraCommentSingle "#.*$"
-syn match  terraAssignment    "[a-z][a-z0-9_-]*" contained skipwhite
+syn match  terraAssignment    "\<[a-z][a-z0-9_-]*\>" contained skipwhite
                               \ nextgroup=terraAssignmentOp
 syn match  terraAssignmentOp  "=" nextgroup=@terraValue skipwhite
 syn match  terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
 syn match  terraValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
 
-syn region terraCommentMulti      start=/\/\*/ end=/\*\//
-syn region terraValueString       start=/"/    end=/"/    contains=terraStringInterp
-syn region terraValueStringInterp start=/\${/  end=/}/    contained
+syn region terraCommentMulti start=/\/\*/ end=/\*\//
+syn region terraValueString  start=/"/    end=/"/    contains=terraStringInterp
+syn region terraStringInterp matchgroup=terraBrackets start=/\${/  end=/}/ contained
 
 syn cluster terraConfigItem contains=terraAssignment
 syn cluster terraBlock      contains=terraProviderBlock,terraResourceBlock
@@ -71,6 +71,7 @@ highlight link terraCommentMulti      Comment
 highlight link terraCommentSingle     Comment
 highlight link terraAssignment        Identifier
 highlight link terraAssignmentOp      Operator
+highlight link terraBrackets          Operator
 highlight link terraProvider          Structure
 highlight link terraProviderBlock     Delimiter
 highlight link terraProviderName      String
@@ -80,10 +81,10 @@ highlight link terraResourceName      String
 highlight link terraResourceTypeBI    Tag
 highlight link terraResourceTypeStr   String
 highlight link terraSection           Structure
+highlight link terraStringInterp      Identifier
 highlight link terraValueBool         Boolean
 highlight link terraValueDec          Number
 highlight link terraValueHexaDec      Number
 highlight link terraValueString       String
-highlight link terraValueStringInterp Underlined
 
 let b:current_syntax = "terraform"
